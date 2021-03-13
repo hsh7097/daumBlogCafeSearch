@@ -104,6 +104,7 @@
     <dimen name="corner_radius14">14dp</dimen>
     <dimen name="corner_radius16">16dp</dimen>
     <dimen name="corner_radius18">18dp</dimen>
+    <dimen name="corner_radius20">20dp</dimen>
     <dimen name="corner_radius24">24dp</dimen>
     <dimen name="corner_radius28">28dp</dimen>
 

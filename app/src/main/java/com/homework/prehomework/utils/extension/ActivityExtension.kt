@@ -1,9 +1,9 @@
-package com.nolbal.prehomework.utils.extension
+package com.homework.prehomework.utils.extension
 
 import android.app.Activity
 import android.content.Context
 import android.view.inputmethod.InputMethodManager
-import com.nolbal.prehomework.R
+import com.homework.prehomework.R
 
 
 fun Activity.transitionRtoL() {

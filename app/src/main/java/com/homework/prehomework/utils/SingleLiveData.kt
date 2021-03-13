@@ -1,4 +1,4 @@
-package com.nolbal.prehomework.utils
+package com.homework.prehomework.utils
 
 import android.util.Log
 import androidx.annotation.MainThread

@@ -1,15 +1,15 @@
-package com.nolbal.prehomework.splash
+package com.homework.prehomework.splash
 
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.WindowManager
-import com.nolbal.prehomework.MainActivity
-import com.nolbal.prehomework.base.BaseActivity
+import com.homework.prehomework.base.BaseActivity
+import com.homework.prehomework.main.MainActivity
 
 class SplashActivity : BaseActivity() {
 
-    companion object{
+    companion object {
         private const val PENDING_DELAY = 1000L
     }
 
@@ -33,8 +33,9 @@ class SplashActivity : BaseActivity() {
     private fun pendingStartMain() {
         Handler(Looper.getMainLooper()).postDelayed({
             MainActivity.start(this)
-        }, PENDING_DELAY)
+        },
+            PENDING_DELAY
+        )
     }
-
 
 }

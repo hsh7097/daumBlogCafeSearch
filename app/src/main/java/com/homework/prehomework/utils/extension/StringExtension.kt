@@ -1,7 +1,7 @@
-package com.nolbal.prehomework.utils.extension
+package com.homework.prehomework.utils.extension
 
 import android.util.Log
-import com.nolbal.prehomework.BuildConfig
+import com.homework.prehomework.BuildConfig
 
 
 fun String.logDebug(logData: String) {

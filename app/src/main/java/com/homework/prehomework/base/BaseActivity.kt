@@ -1,12 +1,12 @@
-package com.nolbal.prehomework.base
+package com.homework.prehomework.base
 
 import android.os.Handler
 import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
-import com.nolbal.prehomework.BuildConfig
-import com.nolbal.prehomework.R
-import com.nolbal.prehomework.utils.extension.logError
-import com.nolbal.prehomework.utils.extension.showToast
+import com.homework.prehomework.BuildConfig
+import com.homework.prehomework.R
+import com.homework.prehomework.utils.extension.logError
+import com.homework.prehomework.utils.extension.showToast
 
 open class BaseActivity : AppCompatActivity() {
 

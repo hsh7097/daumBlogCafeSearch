@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">preHomework</string>
+    <string name="search_hint">검색어를 입력해 주세요.</string>
 </resources>

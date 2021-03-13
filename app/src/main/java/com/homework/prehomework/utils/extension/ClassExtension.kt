@@ -1,10 +1,10 @@
-package com.nolbal.prehomework.utils.extension
+package com.homework.prehomework.utils.extension
 
 import android.view.View
 import java.text.SimpleDateFormat
 import java.util.*
 
-var DEFAULT_TAG = "NOLBAL_LOG"
+var DEFAULT_TAG = "HOMEWORK_LOG"
 
 
 fun logDebug(logData: String) {

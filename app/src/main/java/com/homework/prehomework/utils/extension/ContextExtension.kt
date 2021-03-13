@@ -1,4 +1,4 @@
-package com.nolbal.prehomework.utils.extension
+package com.homework.prehomework.utils.extension
 
 import android.content.Context
 import android.content.res.Resources

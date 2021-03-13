@@ -3,6 +3,10 @@ package com.nolbal.prehomework.base
 import android.os.Handler
 import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
+import com.nolbal.prehomework.BuildConfig
+import com.nolbal.prehomework.R
+import com.nolbal.prehomework.utils.extension.logError
+import com.nolbal.prehomework.utils.extension.showToast
 
 open class BaseActivity : AppCompatActivity() {
 

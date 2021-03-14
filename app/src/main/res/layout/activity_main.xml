@@ -98,6 +98,7 @@
                 android:id="@+id/recentlyRv"
                 android:layout_width="@dimen/zero_dp"
                 android:layout_height="wrap_content"
+                setMainMainRecentlyAdapterData="@{viewModel.recentlySearchWordListLiveData}"
                 android:layout_marginEnd="@dimen/external_margin56"
                 android:maxHeight="300dp"
                 app:layout_constraintEnd_toEndOf="parent"

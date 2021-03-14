@@ -31,6 +31,7 @@ fun EditText.focusOn() {
 
 fun EditText.focusOff() {
     hideKeyboard()
+    logError("focusOff")
     this.run {
         isFocusableInTouchMode = false
         isFocusable = false
@@ -81,8 +82,8 @@ fun EditText.showKeyBoard() {
 
 }
 
-fun EditText.registerEnterKeyListener(block: () -> Unit) {
-    setOnKeyListener { _, keyCode, event ->
+fun EditText?.registerEnterKeyListener(block: () -> Unit) {
+    this?.setOnKeyListener { _, keyCode, event ->
         if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
             block.invoke()
             return@setOnKeyListener true

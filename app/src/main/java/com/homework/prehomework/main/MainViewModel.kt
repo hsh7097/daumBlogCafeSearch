@@ -55,6 +55,7 @@ class MainViewModel(
 
 
     fun callSearch(searchWord: String) {
+        if (searchWord.isEmpty()) return
         this.searchWord = searchWord
         recentlySearchDao.insert(RecentlySearchWord(word = searchWord))
         searchPaging = PAGING_DEFAULT
@@ -178,6 +179,7 @@ class MainViewModel(
 
     fun callShowRecentSearchLayout() {
         val searchWordList = ArrayList(recentlySearchDao.getRecentSearchedWords())
+        logError("searchWordList$searchWordList")
         if (searchWordList.isNotEmpty()) {
             _recentlySearchWordListLiveData.postValue(searchWordList)
         }

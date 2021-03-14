@@ -8,7 +8,8 @@ import java.util.regex.Pattern
 @SuppressLint("SimpleDateFormat")
 object TimeUtils {
 
-    const val FORMAT_DAY: String = "yyyy년 MM월 dd일"
+    const val FORMAT_YEAR_MONTH_DAY: String = "yyyy년 MM월 dd일"
+    const val FORMAT_DATE: String = "yyyy년 MM월 dd일 a hh시 mm분"
 
 
     fun getCurrentCalendar(): Calendar = Calendar.getInstance(TimeZone.getDefault())
@@ -24,8 +25,19 @@ object TimeUtils {
     }
 
     /**
-     * convertTime
-     * storeTime = 2020-06-17T04:29:46.778Z
+     * convertTime = 2019년 03월 14일 오전 11시 48분
+     */
+    fun convertTime(time: String?): String {
+        if (time.isNullOrEmpty()) return ""
+        return try {
+            val fromDate: Date = parseDate(time) ?: return ""
+            SimpleDateFormat(FORMAT_DATE).format(fromDate)
+        } catch (e: IllegalArgumentException) {
+            ""
+        }
+    }
+
+    /**
      * convertTime = 2020년 06월 17일
      */
     fun convertTimeYearMonthDay(time: String?): String {
@@ -37,7 +49,7 @@ object TimeUtils {
             when (getTimeDayDiff(fromDate = fromDate.time)) {
                 0 -> "오늘"
                 1 -> "어제"
-                else -> SimpleDateFormat(FORMAT_DAY).format(fromDate)
+                else -> SimpleDateFormat(FORMAT_YEAR_MONTH_DAY).format(fromDate)
             }
         } catch (e: IllegalArgumentException) {
             ""

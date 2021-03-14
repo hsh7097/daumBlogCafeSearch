@@ -2,7 +2,7 @@ package com.homework.prehomework.main
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.homework.prehomework.base.BaseViewModel
+import androidx.lifecycle.ViewModel
 import com.homework.prehomework.localRoom.RecentlyRoomDataBase
 import com.homework.prehomework.localRoom.RecentlySearchWord
 import com.homework.prehomework.localRoom.RecentlySearchWordDao
@@ -23,13 +23,13 @@ class MainViewModel(
         MainRepositoryImpl(),
     private val recentlySearchDao: RecentlySearchWordDao =
         RecentlyRoomDataBase.getInstance().recentlyDao()
-) : BaseViewModel() {
+) : ViewModel() {
 
     companion object {
         private const val PAGING_DEFAULT = 1
     }
 
-    enum class SearchType(val value : String) {
+    enum class SearchType(val value: String) {
         ALL("All"),
         BLOG("Blog"),
         CAFE("Cafe")
@@ -51,12 +51,23 @@ class MainViewModel(
     private val _showSortTypeDialogLiveData = SingleLiveData<SortType>()
     val showSortTypeDialogLiveData: LiveData<SortType> get() = _showSortTypeDialogLiveData
 
+    //검색 상세 화면 실행
+    private val _callSearchDetailActivityLiveData = SingleLiveData<RpSearchResult.Document>()
+    val callSearchDetailActivityLiveData: LiveData<RpSearchResult.Document> get() = _callSearchDetailActivityLiveData
+
+    //최근 검색어
     var searchWord: String? = null
-    var searchPaging: Int = 1
+
+    //검색 될 페이지
+    var searchPaging: Int = PAGING_DEFAULT
 
     //검색 타입
     private var searchType: SearchType = SearchType.ALL
 
+    /**
+     * 검색 호출
+     * @param searchWord 검색될 단어
+     */
     fun callSearch(searchWord: String?) {
         if (searchWord.isNullOrEmpty()) return
         this.searchWord = searchWord
@@ -69,6 +80,10 @@ class MainViewModel(
         }
     }
 
+
+    /**
+     * 검색 페이징 호출
+     */
     fun callSearchPaging() {
         when (searchType) {
             SearchType.BLOG -> getBlogSearch()
@@ -77,12 +92,21 @@ class MainViewModel(
         }
     }
 
+
+    /**
+     * 검색 타입 변경
+     * @param searchType 변결될 타입
+     * ALL, BLOG, CAFE
+     */
     fun changeSearchType(searchType: SearchType) {
         if (this.searchType == searchType) return
         this.searchType = searchType
         callSearch(searchWord)
     }
 
+    /**
+     * 블로그 데이터 호출
+     */
     private fun getBlogSearch() {
         if (searchWord.isNullOrEmpty()) return
         mainRepository.getBlogSearch(
@@ -111,6 +135,9 @@ class MainViewModel(
             })
     }
 
+    /**
+     * 카페 데이터 호출
+     */
     private fun getCafeSearch() {
         if (searchWord.isNullOrEmpty()) return
         mainRepository.getCafeSearch(
@@ -140,6 +167,9 @@ class MainViewModel(
             })
     }
 
+    /**
+     * 블로그와 카페 데이터 호출
+     */
     private fun getAllSearch() {
         if (searchWord.isNullOrEmpty()) return
         Single.zip(
@@ -182,6 +212,9 @@ class MainViewModel(
 
     }
 
+    /**
+     * 최근 검색어 리스트 호출
+     */
     fun callShowRecentSearchLayout() {
         val searchWordList = ArrayList(recentlySearchDao.getRecentSearchedWords())
         if (searchWordList.isNotEmpty()) {
@@ -189,8 +222,21 @@ class MainViewModel(
         }
     }
 
+    /**
+     * 정렬 다이얼로그 호출
+     * @param sortType 변결될 타입
+     * TITLE, DATE_TIME
+     */
     fun callShowSortDialog(sortType: SortType) {
         _showSortTypeDialogLiveData.postValue(sortType)
+    }
+
+    /**
+     * 상품 상세 실행
+     * @param searchModel 검색된 상품
+     */
+    fun callSearchDetail(searchModel: RpSearchResult.Document) {
+        _callSearchDetailActivityLiveData.postValue(searchModel)
     }
 
 }

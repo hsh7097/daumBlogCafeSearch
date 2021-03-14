@@ -3,7 +3,6 @@
  */
 package com.homework.prehomework.utils.extension
 
-import android.graphics.drawable.Drawable
 import android.text.Html
 import android.text.SpannableString
 import android.text.style.UnderlineSpan

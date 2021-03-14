@@ -11,9 +11,7 @@ import com.homework.prehomework.localRoom.RecentlySearchWord
 import com.homework.prehomework.main.MainViewModel
 import com.homework.prehomework.utils.extension.logError
 
-class MainRecentlyAdapter(
-    private val mainViewModel: MainViewModel
-) : BaseRecyclerAdapter<RecentlySearchWord>() {
+class MainRecentlyAdapter() : BaseRecyclerAdapter<RecentlySearchWord>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         return RecentlyViewHolder(parent)

@@ -12,18 +12,15 @@ import com.homework.prehomework.base.recyclerview.BasePagingRecyclerAdapter
 import com.homework.prehomework.base.recyclerview.BaseViewHolder
 import com.homework.prehomework.databinding.LayoutMainContentItemBinding
 import com.homework.prehomework.databinding.LayoutMainHeaderItemBinding
-import com.homework.prehomework.main.MainViewModel
 import com.homework.prehomework.main.MainViewModel.SearchType
 import com.homework.prehomework.network.model.responseModel.RpSearchResult
-import com.homework.prehomework.network.model.responseModel.name
 import com.homework.prehomework.utils.TimeUtils
+import com.homework.prehomework.utils.extension.setClickAnimation
 import com.homework.prehomework.utils.extension.setImageUrlCenterCrop
 import com.homework.prehomework.utils.extension.setTextHtml
 import com.homework.prehomework.network.model.responseModel.RpSearchResult.Document as SearchModel
 
-class MainContentAdapter(
-    private val mainViewModel: MainViewModel
-) : BasePagingRecyclerAdapter<SearchModel>() {
+class MainContentAdapter() : BasePagingRecyclerAdapter<SearchModel>() {
     init {
         setUseHeader()
     }
@@ -35,6 +32,18 @@ class MainContentAdapter(
 
     private var selectSortType: SortType = SortType.TITLE
 
+
+    interface OnMainContentListener {
+        fun onChangeSearchType(searchType: SearchType)
+        fun onCallSortDialog(sortType: SortType)
+        fun onCallSearchDetail(searchModel: SearchModel)
+    }
+
+    private var onMainContentListener: OnMainContentListener? = null
+
+    fun setOnMainContentListener(onMainContentListener: OnMainContentListener) {
+        this.onMainContentListener = onMainContentListener
+    }
 
     fun changeSortType(sortType: SortType) {
         selectSortType = sortType
@@ -80,7 +89,7 @@ class MainContentAdapter(
         if (position == mPaginationLastPosition) {
             return
         } else {
-            mainViewModel.callSearchPaging()
+            mOnAddDataListener?.invoke()
             mPaginationLastPosition = position
         }
     }
@@ -108,9 +117,8 @@ class MainContentAdapter(
                         position: Int,
                         id: Long
                     ) {
-                        mainViewModel.changeSearchType(SearchType.values()[position])
+                        onMainContentListener?.onChangeSearchType(SearchType.values()[position])
                     }
-
                 }
 
                 adapter = ArrayAdapter<String>(
@@ -128,7 +136,7 @@ class MainContentAdapter(
         fun onClick(view: View) {
             when (view.id) {
                 R.id.sortIv -> {
-                    mainViewModel.callShowSortDialog(selectSortType)
+                    onMainContentListener?.onCallSortDialog(selectSortType)
                 }
             }
         }
@@ -140,15 +148,32 @@ class MainContentAdapter(
             LayoutMainContentItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
     ) : BaseViewHolder(binding.root) {
 
+        init {
+            binding.contentViewHolder = this
+        }
+
         fun bindData(searchModel: SearchModel) {
+            data = searchModel
             with(binding) {
-                nameTv.text = searchModel.name
+                nameTv.text = searchModel.getName()
                 labelTv.text = searchModel.searchType?.value
                 titleTv.setTextHtml(searchModel.title)
-                dateTimeTv.text = TimeUtils.convertTimeYearMonthDay(searchModel.datetime)
+                dateTimeTv.text = searchModel.getShortDateTime()
                 thumbIv.setImageUrlCenterCrop(searchModel.thumbnail)
             }
 
+        }
+
+        fun onAnimClick(view: View) {
+            view.setClickAnimation {
+                when (view.id) {
+                    R.id.contentCv -> {
+                        (data as? SearchModel)?.let { searchModel ->
+                            onMainContentListener?.onCallSearchDetail(searchModel)
+                        }
+                    }
+                }
+            }
         }
     }
 }

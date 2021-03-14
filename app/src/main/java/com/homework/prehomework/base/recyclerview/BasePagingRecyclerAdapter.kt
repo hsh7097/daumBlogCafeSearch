@@ -6,9 +6,9 @@ abstract class BasePagingRecyclerAdapter<M> : BaseRecyclerAdapter<M>() {
     }
 
     private var hasNext = true
-    protected var mOnAddDataListener: ((Int) -> Unit)? = null
+    protected var mOnAddDataListener: (() -> Unit)? = null
 
-    fun setOnAddDataListener(onAddDataListener: ((Int) -> Unit)?) {
+    fun setOnAddDataListener(onAddDataListener: (() -> Unit)?) {
         mOnAddDataListener = onAddDataListener
     }
 

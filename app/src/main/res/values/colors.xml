@@ -45,7 +45,16 @@
     <color name="black_alpha10">#1A000000</color>
 
 
-    <color name="blindColors">#C54240</color>
+    <color name="blood">#C54240</color>
+
+    <color name="gray_1">#222222</color>
+    <color name="gray_2">#2d2d2d</color>
+    <color name="gray_3">#4d4d4d</color>
+    <color name="gray_4">#9b9b9b</color>
+    <color name="gray_5">#d8d8d8</color>
+    <color name="gray_6">#f3f3f3</color>
+
+    <color name="white_dark">#f8f8f8</color>
 
 
 </resources>

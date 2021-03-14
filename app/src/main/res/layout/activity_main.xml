@@ -1,18 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <data>
+
+        <variable
+            name="mainActivity"
+            type="com.homework.prehomework.main.MainActivity" />
+
+        <variable
+            name="viewModel"
+            type="com.homework.prehomework.main.MainViewModel" />
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white_dark">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/appBarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/white"
+            android:elevation="@dimen/elevation4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <EditText
+                android:id="@+id/searchEt"
+                android:layout_width="@dimen/zero_dp"
+                android:layout_height="@dimen/zero_dp"
+                android:layout_marginStart="@dimen/external_margin16"
+                android:layout_marginTop="@dimen/external_margin8"
+                android:layout_marginEnd="@dimen/external_margin8"
+                android:layout_marginBottom="@dimen/external_margin8"
+                android:background="@drawable/gray_5_solid_gray_6_rectangle20"
+                android:hint="@string/search_hint"
+                android:paddingStart="@dimen/internal_padding16"
+                android:paddingEnd="@dimen/internal_padding16"
+                android:singleLine="true"
+                android:textColor="@color/gray_1"
+                android:textColorHint="@color/gray_4"
+                android:textSize="@dimen/text_size12"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/searchIv"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/searchIv"
+                android:layout_width="@dimen/zero_dp"
+                android:layout_height="@dimen/zero_dp"
+                android:layout_marginTop="@dimen/external_margin8"
+                android:layout_marginEnd="@dimen/external_margin16"
+                android:layout_marginBottom="@dimen/external_margin8"
+                android:background="@drawable/gray_4_rectangle12"
+                android:onClick="@{mainActivity::onAnimClick}"
+                android:padding="@dimen/internal_padding8"
+                android:src="@drawable/icon_search"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="w, 1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/contentRv"
+            setMainContentAdapterData="@{viewModel.contentListLiveData}"
+            setMainContentAdapterPagingData="@{viewModel.contentPageListLiveData}"
+            android:layout_width="@dimen/zero_dp"
+            android:layout_height="@dimen/zero_dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/appBarLayout" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/recentSearchBackLayout"
+            android:layout_width="@dimen/zero_dp"
+            android:layout_height="@dimen/zero_dp"
+            android:background="@color/black_alpha30"
+            android:onClick="@{mainActivity::onClick}"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/appBarLayout">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recentlyRv"
+                android:layout_width="@dimen/zero_dp"
+                android:layout_height="wrap_content"
+                setMainMainRecentlyAdapterData="@{viewModel.recentlySearchWordListLiveData}"
+                android:layout_marginEnd="@dimen/external_margin56"
+                android:maxHeight="300dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

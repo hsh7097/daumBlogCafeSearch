@@ -1,8 +1,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="FullScreen" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/blindColors</item>
-        <item name="colorAccent">@color/blindColors</item>
+        <item name="colorPrimary">@color/blood</item>
+        <item name="colorAccent">@color/blood</item>
         <item name="android:windowLayoutInDisplayCutoutMode" tools:targetApi="28">shortEdges</item>
         <item name="android:textViewStyle">@style/TextViewStyle</item>
         <item name="colorPrimaryDark" tools:targetApi="23">@color/white</item>

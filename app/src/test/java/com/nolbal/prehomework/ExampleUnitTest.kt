@@ -1,4 +1,4 @@
-package com.nolbal.prehomework
+package com.homework.prehomework
 
 import org.junit.Test
 

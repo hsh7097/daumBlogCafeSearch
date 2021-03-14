@@ -8,8 +8,6 @@
 - [Jetpack](https://developer.android.com/jetpack/?gclid=EAIaIQobChMIqtPN0pXv6AIVEayWCh2FJA4hEAAYASAAEgJe__D_BwE&gclsrc=aw.ds)
 - [RxJava2](https://github.com/ReactiveX/RxJava/wiki/What's-different-in-2.0)
 - [Retrofit](http://square.github.io/retrofit/)
-- [Firebase](https://firebase.google.com/?hl=ko)
-- [NaverMap](https://navermaps.github.io/maps.js/)
 - ...
 
 

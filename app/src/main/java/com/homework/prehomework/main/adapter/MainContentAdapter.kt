@@ -14,10 +14,7 @@ import com.homework.prehomework.databinding.LayoutMainContentItemBinding
 import com.homework.prehomework.databinding.LayoutMainHeaderItemBinding
 import com.homework.prehomework.main.MainViewModel.SearchType
 import com.homework.prehomework.network.model.responseModel.RpSearchResult
-import com.homework.prehomework.utils.extension.setBackgroundDrawableResource
-import com.homework.prehomework.utils.extension.setClickAnimation
-import com.homework.prehomework.utils.extension.setImageUrlCenterCrop
-import com.homework.prehomework.utils.extension.setTextHtml
+import com.homework.prehomework.utils.extension.*
 import com.homework.prehomework.network.model.responseModel.RpSearchResult.Document as SearchModel
 
 class MainContentAdapter : BasePagingRecyclerAdapter<SearchModel>() {
@@ -117,6 +114,7 @@ class MainContentAdapter : BasePagingRecyclerAdapter<SearchModel>() {
                         position: Int,
                         id: Long
                     ) {
+                        logError("onItemSelected")
                         onMainContentListener?.onChangeSearchType(SearchType.values()[position])
                     }
                 }

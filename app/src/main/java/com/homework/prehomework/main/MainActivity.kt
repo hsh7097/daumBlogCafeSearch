@@ -102,7 +102,7 @@ class MainActivity : BaseActivity() {
         with(mainViewModel) {
             //상품 정보 호출로 검색입력 포커스 아웃
             contentListLiveData.observe(this@MainActivity, Observer {
-                binding.searchEt.focusOff()
+                finishGetContentList()
             })
 
             //최근 검색어 보여지도록 호출
@@ -115,19 +115,33 @@ class MainActivity : BaseActivity() {
                 showSortDialog(it)
             })
 
-            //정렬 타입을 선택하는 다이얼로그 생성
+            //상품 상세 화면 이동
             callStartSearchDetailActivityLiveData.observe(this@MainActivity, Observer {
                 startSearchDetailActivity(it)
+            })
+
+            //로딩 다이얼로그 생성
+            callShowLoadingLiveData.observe(this@MainActivity, Observer {
+                showLoadingPopup()
             })
         }
     }
 
+
     private fun callSearch() {
-        val searchText = binding.searchEt.getTextAndClear()
+        val searchText: String = binding.searchEt.getTextAndFocusOff()
         if (searchText.isNotNullEmpty()) {
-            binding.searchEt.focusOff()
             mainViewModel.callSearch(searchText)
         }
+    }
+
+    private fun clearEditText() {
+        binding.searchEt.clearText()
+    }
+
+    private fun finishGetContentList() {
+        dismissLoadingPopup()
+        binding.searchEt.focusOff()
     }
 
     private fun setListener() {
@@ -147,8 +161,8 @@ class MainActivity : BaseActivity() {
         mainRecentlyAdapter.setOnItemClickListener(object : BaseViewHolder.OnItemClickListener {
             override fun onItemClick(position: Int, model: Any?) {
                 (model as? RecentlySearchWord)?.let {
-                    mainViewModel.callSearch(searchWord = it.word)
-                    binding.searchEt.focusOff()
+                    binding.searchEt.setText(it.word)
+                    callSearch()
                 }
             }
         })
@@ -221,6 +235,9 @@ class MainActivity : BaseActivity() {
             when (view.id) {
                 R.id.searchIv -> {
                     callSearch()
+                }
+                R.id.deleteIv -> {
+                    clearEditText()
                 }
             }
         }

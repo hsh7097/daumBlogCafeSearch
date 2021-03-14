@@ -5,6 +5,8 @@ import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import com.homework.prehomework.BuildConfig
 import com.homework.prehomework.R
+import com.homework.prehomework.popupManager.LoadingAnimationDialog
+import com.homework.prehomework.popupManager.LoadingDialogManager
 import com.homework.prehomework.utils.extension.logError
 import org.jetbrains.anko.toast
 
@@ -17,6 +19,12 @@ open class BaseActivity : AppCompatActivity() {
      * closeFlag를 원상태로 다시 돌리는 핸들러이다.
      */
     private var closeFlag = false
+
+
+    private val loadingAnimationDialog: LoadingAnimationDialog? by lazy {
+        LoadingDialogManager.getInstance().getLoadingDialog(this)
+    }
+
 
     override fun onResume() {
         super.onResume()
@@ -41,5 +49,14 @@ open class BaseActivity : AppCompatActivity() {
         }
     }
 
+    fun showLoadingPopup() {
+        Handler(Looper.getMainLooper()).post {
+            loadingAnimationDialog?.show()
+        }
+    }
+
+    fun dismissLoadingPopup(stopDismiss: (() -> Unit)? = null) {
+        loadingAnimationDialog?.stopLoadingAnimation(stopDismiss) ?: stopDismiss?.invoke()
+    }
 
 }

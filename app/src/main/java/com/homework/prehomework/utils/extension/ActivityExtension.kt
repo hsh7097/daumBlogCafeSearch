@@ -1,6 +1,8 @@
 package com.homework.prehomework.utils.extension
 
 import android.app.Activity
+import android.content.Context
+import android.view.inputmethod.InputMethodManager
 import com.homework.prehomework.R
 
 
@@ -10,4 +12,17 @@ fun Activity.transitionRtoL() {
 
 fun Activity.transitionLtoR() {
     overridePendingTransition(R.anim.anim_slide_in_left, R.anim.anim_slide_out_right)
+}
+
+
+/**
+ * 키보드 숨김
+ */
+fun Activity.hideKeyBoard() {
+    try {
+        val inputManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputManager.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
+    } catch (e: NullPointerException) {
+        e.printStackTrace()
+    }
 }

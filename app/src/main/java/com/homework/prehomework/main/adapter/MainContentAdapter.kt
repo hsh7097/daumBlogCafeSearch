@@ -14,13 +14,13 @@ import com.homework.prehomework.databinding.LayoutMainContentItemBinding
 import com.homework.prehomework.databinding.LayoutMainHeaderItemBinding
 import com.homework.prehomework.main.MainViewModel.SearchType
 import com.homework.prehomework.network.model.responseModel.RpSearchResult
-import com.homework.prehomework.utils.TimeUtils
+import com.homework.prehomework.utils.extension.setBackgroundDrawableResource
 import com.homework.prehomework.utils.extension.setClickAnimation
 import com.homework.prehomework.utils.extension.setImageUrlCenterCrop
 import com.homework.prehomework.utils.extension.setTextHtml
 import com.homework.prehomework.network.model.responseModel.RpSearchResult.Document as SearchModel
 
-class MainContentAdapter() : BasePagingRecyclerAdapter<SearchModel>() {
+class MainContentAdapter : BasePagingRecyclerAdapter<SearchModel>() {
     init {
         setUseHeader()
     }
@@ -161,7 +161,11 @@ class MainContentAdapter() : BasePagingRecyclerAdapter<SearchModel>() {
                 dateTimeTv.text = searchModel.getShortDateTime()
                 thumbIv.setImageUrlCenterCrop(searchModel.thumbnail)
             }
+            updateBackground(searchModel.isOpened)
+        }
 
+        private fun updateBackground(isOpened: Boolean) {
+            binding.contentLayout.setBackgroundDrawableResource(if (isOpened) R.color.gray_6 else R.color.white)
         }
 
         fun onAnimClick(view: View) {
@@ -169,7 +173,9 @@ class MainContentAdapter() : BasePagingRecyclerAdapter<SearchModel>() {
                 when (view.id) {
                     R.id.contentCv -> {
                         (data as? SearchModel)?.let { searchModel ->
+                            searchModel.isOpened = true
                             onMainContentListener?.onCallSearchDetail(searchModel)
+                            updateBackground(searchModel.isOpened)
                         }
                     }
                 }

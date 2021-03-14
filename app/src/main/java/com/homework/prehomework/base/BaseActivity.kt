@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.homework.prehomework.BuildConfig
 import com.homework.prehomework.R
 import com.homework.prehomework.utils.extension.logError
-import com.homework.prehomework.utils.extension.showToast
+import org.jetbrains.anko.toast
 
 open class BaseActivity : AppCompatActivity() {
 
@@ -29,7 +29,7 @@ open class BaseActivity : AppCompatActivity() {
     //어플 종료
     fun finishApplication() {
         if (!closeFlag) {
-            showToast(R.string.toast_exit)
+            toast(R.string.toast_exit)
             //Flag상태값 변경
             closeFlag = true
             //2초후 Flag 원상태로 복귀.

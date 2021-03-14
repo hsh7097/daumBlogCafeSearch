@@ -161,7 +161,6 @@ class MainViewModel(
                 }
 
                 override fun onError(e: Throwable) {
-                    logError("onError $e")
                     e.printStackTrace()
                 }
             })

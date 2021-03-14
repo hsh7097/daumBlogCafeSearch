@@ -23,8 +23,10 @@
         app:cardElevation="@dimen/elevation2">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/contentLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/white">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/thumbCv"
@@ -33,7 +35,6 @@
                 android:layout_marginTop="@dimen/external_margin16"
                 android:layout_marginEnd="@dimen/external_margin16"
                 android:layout_marginBottom="@dimen/external_margin16"
-                app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="@dimen/corner_radius8"
                 app:cardElevation="@dimen/zero_dp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -55,10 +56,10 @@
                 android:layout_height="24dp"
                 android:layout_marginStart="@dimen/external_margin16"
                 android:layout_marginTop="@dimen/external_margin16"
-                android:background="@drawable/gray_6_solid_oval"
+                android:background="@drawable/gray_3_solid_oval"
                 android:fontFamily="@font/nanumsquare_otfb"
                 android:gravity="center"
-                android:textColor="@color/gray_1"
+                android:textColor="@color/white"
                 android:textSize="@dimen/text_size18"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

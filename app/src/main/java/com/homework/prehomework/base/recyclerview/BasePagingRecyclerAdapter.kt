@@ -2,7 +2,7 @@ package com.homework.prehomework.base.recyclerview
 
 abstract class BasePagingRecyclerAdapter<M> : BaseRecyclerAdapter<M>() {
     companion object {
-        private const val PAGINATION_ADDITIONAL_REQUEST_LIMIT = 8
+        private const val PAGINATION_ADDITIONAL_REQUEST_LIMIT = 2
     }
 
     private var hasNext = true

@@ -31,7 +31,7 @@ object TimeUtils {
         if (time.isNullOrEmpty()) return ""
         return try {
             val fromDate: Date = parseDate(time) ?: return ""
-            SimpleDateFormat(FORMAT_DATE).format(fromDate)
+            SimpleDateFormat(FORMAT_DATE, Locale.KOREA).format(fromDate)
         } catch (e: IllegalArgumentException) {
             ""
         }
@@ -57,33 +57,36 @@ object TimeUtils {
     }
 
 
-    // 문자열 (날짜) => SimpleDateFormat
-    // yyyy-MM-dd HH:mm:ss => yyyy-MM-dd HH:mm:ss
-    // yyyy-MM-dd HH:mm:ss.SSS => yyyy-MM-dd HH:mm:ss.SSS
-    //
-    // yyyy-MM-dd HH:mm:ssZ => yyyy-MM-dd HH:mm:ssX
-    // yyyy-MM-dd HH:mm:ss+09 => yyyy-MM-dd HH:mm:ssX
-    // yyyy-MM-dd HH:mm:ss+0900 => yyyy-MM-dd HH:mm:ssX
-    // yyyy-MM-dd HH:mm:ss+09:00 => yyyy-MM-dd HH:mm:ssXXX
-    // yyyy-MM-dd HH:mm:ssKST => yyyy-MM-dd HH:mm:ssZ
-    //
-    // yyyy-MM-dd HH:mm:ss.SSSZ => yyyy-MM-dd HH:mm:ss.SSSX
-    // yyyy-MM-dd HH:mm:ss.SSS+09 => yyyy-MM-dd HH:mm:ss.SSSX
-    // yyyy-MM-dd HH:mm:ss.SSS+0900         => yyyy-MM-dd HH:mm:ss.SSSX
-    // yyyy-MM-dd HH:mm:ss.SSS+09:00         => yyyy-MM-dd HH:mm:ss.SSSXXX
-    // yyyy-MM-dd HH:mm:ss.SSSKST => yyyy-MM-dd HH:mm:ss.SSSZ
-    //
-    // yyyy-MM-ddTHH:mm:ssZ => yyyy-MM-dd'T'HH:mm:ssX
-    // yyyy-MM-ddTHH:mm:ss+09 => yyyy-MM-dd'T'HH:mm:ssX
-    // yyyy-MM-ddTHH:mm:ss+0900 => yyyy-MM-dd'T'HH:mm:ssX
-    // yyyy-MM-ddTHH:mm:ss+09:00 => yyyy-MM-dd'T'HH:mm:ssX
-    // yyyy-MM-ddTHH:mm:ssKST => yyyy-MM-dd'T'HH:mm:ssZ
-    //
-    // yyyy-MM-ddTHH:mm:ss.SSSZ => yyyy-MM-dd'T'HH:mm:ss.SSSX
-    // yyyy-MM-ddTHH:mm:ss.SSS+09 => yyyy-MM-dd'T'HH:mm:ss.SSSX
-    // yyyy-MM-ddTHH:mm:ss.SSS+0900         => yyyy-MM-dd'T'HH:mm:ss.SSSX
-    // yyyy-MM-ddTHH:mm:ss.SSS+09:00         => yyyy-MM-dd'T'HH:mm:ss.SSSXXX
-    // yyyy-MM-ddTHH:mm:ss.SSSKST => yyyy-MM-dd'T'HH:mm:ss.SSSZ
+    /**
+     *
+     * 문자열 (날짜) => SimpleDateFormat
+     * yyyy-MM-dd HH:mm:ss => yyyy-MM-dd HH:mm:ss
+     * yyyy-MM-dd HH:mm:ss.SSS => yyyy-MM-dd HH:mm:ss.SSS
+     *
+     * yyyy-MM-dd HH:mm:ssZ => yyyy-MM-dd HH:mm:ssX
+     * yyyy-MM-dd HH:mm:ss+09 => yyyy-MM-dd HH:mm:ssX
+     * yyyy-MM-dd HH:mm:ss+0900 => yyyy-MM-dd HH:mm:ssX
+     * yyyy-MM-dd HH:mm:ss+09:00 => yyyy-MM-dd HH:mm:ssXXX
+     * yyyy-MM-dd HH:mm:ssKST => yyyy-MM-dd HH:mm:ssZ
+     *
+     * yyyy-MM-dd HH:mm:ss.SSSZ => yyyy-MM-dd HH:mm:ss.SSSX
+     * yyyy-MM-dd HH:mm:ss.SSS+09 => yyyy-MM-dd HH:mm:ss.SSSX
+     * yyyy-MM-dd HH:mm:ss.SSS+0900 => yyyy-MM-dd HH:mm:ss.SSSX
+     * yyyy-MM-dd HH:mm:ss.SSS+09:00 => yyyy-MM-dd HH:mm:ss.SSSXXX
+     * yyyy-MM-dd HH:mm:ss.SSSKST => yyyy-MM-dd HH:mm:ss.SSSZ
+     *
+     * yyyy-MM-ddTHH:mm:ssZ => yyyy-MM-dd'T'HH:mm:ssX
+     * yyyy-MM-ddTHH:mm:ss+09 => yyyy-MM-dd'T'HH:mm:ssX
+     * yyyy-MM-ddTHH:mm:ss+0900 => yyyy-MM-dd'T'HH:mm:ssX
+     * yyyy-MM-ddTHH:mm:ss+09:00 => yyyy-MM-dd'T'HH:mm:ssX
+     * yyyy-MM-ddTHH:mm:ssKST => yyyy-MM-dd'T'HH:mm:ssZ
+     *
+     * yyyy-MM-ddTHH:mm:ss.SSSZ => yyyy-MM-dd'T'HH:mm:ss.SSSX
+     * yyyy-MM-ddTHH:mm:ss.SSS+09 => yyyy-MM-dd'T'HH:mm:ss.SSSX
+     * yyyy-MM-ddTHH:mm:ss.SSS+0900 => yyyy-MM-dd'T'HH:mm:ss.SSSX
+     * yyyy-MM-ddTHH:mm:ss.SSS+09:00 => yyyy-MM-dd'T'HH:mm:ss.SSSXXX
+     * yyyy-MM-ddTHH:mm:ss.SSSKST => yyyy-MM-dd'T'HH:mm:ss.SSSZ
+     */
     fun parseDate(dateString: String?): Date? {
         if (dateString.isNullOrEmpty()) {
             return null

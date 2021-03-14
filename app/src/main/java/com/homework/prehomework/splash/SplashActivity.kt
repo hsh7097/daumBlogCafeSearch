@@ -33,9 +33,7 @@ class SplashActivity : BaseActivity() {
     private fun pendingStartMain() {
         Handler(Looper.getMainLooper()).postDelayed({
             MainActivity.start(this)
-        },
-            PENDING_DELAY
-        )
+        }, PENDING_DELAY)
     }
 
 }

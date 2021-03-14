@@ -5,7 +5,6 @@ import android.os.Looper
 import android.util.Log
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.homework.prehomework.utils.extension.logError
 import java.util.*
 
 
@@ -45,8 +44,9 @@ abstract class BaseRecyclerAdapter<M> : RecyclerView.Adapter<BaseViewHolder>() {
      * @param modelArrayList 추가될 데이터
      */
     open fun addDataList(modelArrayList: ArrayList<M>?) {
-        val insertPosition = model.size
+        var insertPosition = model.size
         model.addAll(modelArrayList!!)
+        if (insertPosition != 0) insertPosition++
         notifyItemRangeInserted(insertPosition, modelArrayList.size)
     }
 

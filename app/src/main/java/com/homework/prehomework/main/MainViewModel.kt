@@ -11,7 +11,7 @@ import com.homework.prehomework.main.repository.MainRepository
 import com.homework.prehomework.main.repository.MainRepositoryImpl
 import com.homework.prehomework.network.model.responseModel.RpSearchResult
 import com.homework.prehomework.utils.SingleLiveData
-import com.homework.prehomework.utils.extension.logError
+import com.homework.prehomework.utils.extension.default
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.BiFunction
@@ -36,7 +36,10 @@ class MainViewModel(
     }
 
     //상품 리스트
-    private val _contentListLiveData = MutableLiveData<ArrayList<RpSearchResult.Document>>()
+    private val _contentListLiveData =
+        MutableLiveData<ArrayList<RpSearchResult.Document>>().default(
+            ArrayList()
+        )
     val contentListLiveData: LiveData<ArrayList<RpSearchResult.Document>> get() = _contentListLiveData
 
     //상품 페이징 리스트
@@ -52,8 +55,12 @@ class MainViewModel(
     val showSortTypeDialogLiveData: LiveData<SortType> get() = _showSortTypeDialogLiveData
 
     //검색 상세 화면 실행
-    private val _callSearchDetailActivityLiveData = SingleLiveData<RpSearchResult.Document>()
-    val callSearchDetailActivityLiveData: LiveData<RpSearchResult.Document> get() = _callSearchDetailActivityLiveData
+    private val _callStartSearchDetailActivityLiveData = SingleLiveData<RpSearchResult.Document>()
+    val callStartSearchDetailActivityLiveData: LiveData<RpSearchResult.Document> get() = _callStartSearchDetailActivityLiveData
+
+    //로딩 다이얼로그 호출
+    private val _callShowLoadingLiveData = SingleLiveData<Unit>()
+    val callShowLoadingLiveData: LiveData<Unit> get() = _callShowLoadingLiveData
 
     //최근 검색어
     var searchWord: String? = null
@@ -71,6 +78,8 @@ class MainViewModel(
     fun callSearch(searchWord: String?) {
         if (searchWord.isNullOrEmpty()) return
         this.searchWord = searchWord
+
+        _callShowLoadingLiveData.call()
         recentlySearchDao.insert(RecentlySearchWord(word = searchWord))
         searchPaging = PAGING_DEFAULT
         when (searchType) {
@@ -161,7 +170,6 @@ class MainViewModel(
                 }
 
                 override fun onError(e: Throwable) {
-                    logError("onError $e")
                     e.printStackTrace()
                 }
             })
@@ -205,7 +213,6 @@ class MainViewModel(
                 }
 
                 override fun onError(e: Throwable) {
-                    logError("onError $e")
                     e.printStackTrace()
                 }
             })
@@ -235,8 +242,8 @@ class MainViewModel(
      * 상품 상세 실행
      * @param searchModel 검색된 상품
      */
-    fun callSearchDetail(searchModel: RpSearchResult.Document) {
-        _callSearchDetailActivityLiveData.postValue(searchModel)
+    fun callStartSearchDetail(searchModel: RpSearchResult.Document) {
+        _callStartSearchDetailActivityLiveData.postValue(searchModel)
     }
 
 }

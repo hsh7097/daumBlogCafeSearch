@@ -10,10 +10,6 @@ import android.widget.EditText
 
 fun EditText?.getString(): String = this?.text?.toString()?.trimEnd(' ')?.trimStart(' ') ?: ""
 
-infix fun EditText.equalsText(checkString: String): Boolean = this.getString() == checkString
-infix fun EditText.equalsText(checkEditText: EditText): Boolean =
-    this.getString() == checkEditText.getString()
-
 fun EditText.clearText() {
     this.run {
         text.clear()
@@ -21,6 +17,9 @@ fun EditText.clearText() {
     }
 }
 
+/**
+ * 포커스 설정
+ */
 fun EditText.focusOn() {
     this.run {
         isFocusableInTouchMode = true
@@ -29,6 +28,10 @@ fun EditText.focusOn() {
     }
 }
 
+
+/**
+ * 포커스 해제
+ */
 fun EditText.focusOff() {
     hideKeyboard()
     this.run {
@@ -41,14 +44,41 @@ fun EditText.focusOff() {
     }
 }
 
+/**
+ * 텍스트 가져온 후 초기화
+ */
+
 fun EditText.getTextAndClear(): String {
     var returnValue: String
     this.run {
-        returnValue = text.toString()
+        returnValue = getString()
         text.clear()
         focusOff()
     }
     return returnValue
+}
+
+/**
+ * 텍스트 가져온 후 초기화
+ */
+
+fun EditText.getTextAndFocusOff(): String {
+    var returnValue: String
+    this.run {
+        returnValue = getString()
+        focusOff()
+    }
+    return returnValue
+}
+
+
+/**
+ * 키보드 보임
+ */
+fun EditText.showKeyBoard() {
+    val inputManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    inputManager.showSoftInput(this, InputMethodManager.SHOW_FORCED)
+
 }
 
 /**
@@ -64,25 +94,11 @@ fun EditText.hideKeyboard() {
     }
 }
 
-
-fun EditText.toUsable(usable: Boolean) {
-    this.run {
-        isClickable = usable
-        isEnabled = usable
-        isFocusable = usable
-        isFocusableInTouchMode = usable
-
-    }
-}
-
-fun EditText.showKeyBoard() {
-    val inputManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-    inputManager.showSoftInput(this, InputMethodManager.SHOW_FORCED)
-
-}
-
-fun EditText?.registerEnterKeyListener(block: () -> Unit) {
-    this?.setOnKeyListener { _, keyCode, event ->
+/**
+ * 엔터 클릭에 대해 콜백 호출
+ */
+fun EditText.registerEnterKeyListener(block: () -> Unit) {
+    this.setOnKeyListener { _, keyCode, event ->
         if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
             block.invoke()
             return@setOnKeyListener true

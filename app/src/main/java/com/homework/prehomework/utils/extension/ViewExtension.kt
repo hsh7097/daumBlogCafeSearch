@@ -57,3 +57,4 @@ infix fun View.changeVisibleView(outView: View) {
 fun View.setBackgroundDrawableResource(@DrawableRes drawableId: Int) {
     background = context.getDrawableCompat(drawableId)
 }
+

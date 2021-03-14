@@ -1,7 +1,6 @@
 package com.homework.prehomework.utils
 
 import android.annotation.SuppressLint
-import com.homework.prehomework.utils.extension.logError
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.regex.Pattern

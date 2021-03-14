@@ -11,14 +11,18 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.SimpleTarget
 
 
-class GlideImageGetter(private val context: Context, private val target: TextView) : Html.ImageGetter {
+class GlideImageGetter(private val context: Context, private val target: TextView) :
+    Html.ImageGetter {
     override fun getDrawable(source: String?): Drawable {
         val drawable = LevelListDrawable()
         Glide.with(context)
             .asBitmap()
             .load(source)
             .into(object : SimpleTarget<Bitmap>() {
-                override fun onResourceReady(resource: Bitmap, transition: com.bumptech.glide.request.transition.Transition<in Bitmap>?) {
+                override fun onResourceReady(
+                    resource: Bitmap,
+                    transition: com.bumptech.glide.request.transition.Transition<in Bitmap>?
+                ) {
                     val bitmapDrawable = BitmapDrawable(resource)
                     drawable.addLevel(1, 1, bitmapDrawable)
                     drawable.setBounds(0, 0, resource.width, resource.height)

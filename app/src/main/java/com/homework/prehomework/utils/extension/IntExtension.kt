@@ -1,11 +1,6 @@
 package com.homework.prehomework.utils.extension
 
 import android.content.res.Resources
-import java.text.NumberFormat
-import java.util.*
-import kotlin.math.max
-import kotlin.math.min
-
 
 
 /**

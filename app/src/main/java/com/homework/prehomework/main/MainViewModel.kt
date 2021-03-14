@@ -11,7 +11,6 @@ import com.homework.prehomework.main.repository.MainRepository
 import com.homework.prehomework.main.repository.MainRepositoryImpl
 import com.homework.prehomework.network.model.responseModel.RpSearchResult
 import com.homework.prehomework.utils.SingleLiveData
-import com.homework.prehomework.utils.extension.logError
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.BiFunction
@@ -52,8 +51,8 @@ class MainViewModel(
     val showSortTypeDialogLiveData: LiveData<SortType> get() = _showSortTypeDialogLiveData
 
     //검색 상세 화면 실행
-    private val _callSearchDetailActivityLiveData = SingleLiveData<RpSearchResult.Document>()
-    val callSearchDetailActivityLiveData: LiveData<RpSearchResult.Document> get() = _callSearchDetailActivityLiveData
+    private val _callStartSearchDetailActivityLiveData = SingleLiveData<RpSearchResult.Document>()
+    val callStartSearchDetailActivityLiveData: LiveData<RpSearchResult.Document> get() = _callStartSearchDetailActivityLiveData
 
     //최근 검색어
     var searchWord: String? = null
@@ -204,7 +203,6 @@ class MainViewModel(
                 }
 
                 override fun onError(e: Throwable) {
-                    logError("onError $e")
                     e.printStackTrace()
                 }
             })
@@ -234,8 +232,8 @@ class MainViewModel(
      * 상품 상세 실행
      * @param searchModel 검색된 상품
      */
-    fun callSearchDetail(searchModel: RpSearchResult.Document) {
-        _callSearchDetailActivityLiveData.postValue(searchModel)
+    fun callStartSearchDetail(searchModel: RpSearchResult.Document) {
+        _callStartSearchDetailActivityLiveData.postValue(searchModel)
     }
 
 }

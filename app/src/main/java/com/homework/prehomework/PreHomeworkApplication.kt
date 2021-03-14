@@ -13,6 +13,7 @@ class PreHomeworkApplication : Application() {
             instance = application
             preHomeApplicationContext = instance
         }
+
         fun getInstance() = instance
         fun getPreHomeApplicationContext() = preHomeApplicationContext
 

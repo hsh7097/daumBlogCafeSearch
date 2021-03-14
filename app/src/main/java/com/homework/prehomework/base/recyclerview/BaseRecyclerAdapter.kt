@@ -5,7 +5,6 @@ import android.os.Looper
 import android.util.Log
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.homework.prehomework.utils.extension.logError
 import java.util.*
 
 

@@ -2,7 +2,6 @@
 <resources>
 
 
-
     <dimen name="zero_dp">0dp</dimen>
 
     <dimen name="external_margin146">146dp</dimen>

@@ -20,7 +20,7 @@ interface RecentlySearchWordDao {
     fun clear()
 
     @Query("SELECT count(*) FROM recent_search_word")
-    fun getCount() : Int
+    fun getCount(): Int
 
     @Query("SELECT * FROM recent_search_word ORDER BY createdAt DESC LIMIT 10")
     fun getRecentSearchedWords(): List<RecentlySearchWord>

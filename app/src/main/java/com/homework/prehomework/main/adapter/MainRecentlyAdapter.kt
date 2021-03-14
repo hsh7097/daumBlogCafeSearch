@@ -8,8 +8,6 @@ import com.homework.prehomework.base.recyclerview.BaseRecyclerAdapter
 import com.homework.prehomework.base.recyclerview.BaseViewHolder
 import com.homework.prehomework.databinding.LayoutRecentlySearchItemBinding
 import com.homework.prehomework.localRoom.RecentlySearchWord
-import com.homework.prehomework.main.MainViewModel
-import com.homework.prehomework.utils.extension.logError
 
 class MainRecentlyAdapter() : BaseRecyclerAdapter<RecentlySearchWord>() {
 

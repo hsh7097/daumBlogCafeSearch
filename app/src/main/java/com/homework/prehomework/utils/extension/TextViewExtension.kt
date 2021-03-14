@@ -4,8 +4,6 @@
 package com.homework.prehomework.utils.extension
 
 import android.text.Html
-import android.text.SpannableString
-import android.text.style.UnderlineSpan
 import android.widget.TextView
 import com.homework.prehomework.utils.GlideImageGetter
 

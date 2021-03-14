@@ -116,7 +116,7 @@ class MainActivity : BaseActivity() {
             })
 
             //정렬 타입을 선택하는 다이얼로그 생성
-            callSearchDetailActivityLiveData.observe(this@MainActivity, Observer {
+            callStartSearchDetailActivityLiveData.observe(this@MainActivity, Observer {
                 startSearchDetailActivity(it)
             })
         }
@@ -166,7 +166,7 @@ class MainActivity : BaseActivity() {
                 }
 
                 override fun onCallSearchDetail(searchModel: RpSearchResult.Document) {
-                    mainViewModel.callSearchDetail(searchModel)
+                    mainViewModel.callStartSearchDetail(searchModel)
                 }
 
             })

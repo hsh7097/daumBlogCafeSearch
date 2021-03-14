@@ -14,10 +14,12 @@ import com.homework.prehomework.R
 import com.homework.prehomework.base.BaseActivity
 import com.homework.prehomework.base.recyclerview.BaseViewHolder
 import com.homework.prehomework.databinding.ActivityMainBinding
+import com.homework.prehomework.detail.SearchDetailActivity
 import com.homework.prehomework.localRoom.RecentlySearchWord
 import com.homework.prehomework.main.adapter.MainContentAdapter
 import com.homework.prehomework.main.adapter.MainContentAdapter.SortType
 import com.homework.prehomework.main.adapter.MainRecentlyAdapter
+import com.homework.prehomework.network.model.responseModel.RpSearchResult
 import com.homework.prehomework.utils.extension.*
 import com.homework.prehomework.widgets.itemDecoration.ItemVerticalDecorator
 import org.jetbrains.anko.intentFor
@@ -36,11 +38,11 @@ class MainActivity : BaseActivity() {
     private val mainViewModel: MainViewModel by viewModels()
 
     private val mainContentAdapter by lazy {
-        MainContentAdapter(mainViewModel)
+        MainContentAdapter()
     }
 
     private val mainRecentlyAdapter by lazy {
-        MainRecentlyAdapter(mainViewModel)
+        MainRecentlyAdapter()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -112,6 +114,11 @@ class MainActivity : BaseActivity() {
             showSortTypeDialogLiveData.observe(this@MainActivity, Observer {
                 showSortDialog(it)
             })
+
+            //정렬 타입을 선택하는 다이얼로그 생성
+            callSearchDetailActivityLiveData.observe(this@MainActivity, Observer {
+                startSearchDetailActivity(it)
+            })
         }
     }
 
@@ -144,8 +151,26 @@ class MainActivity : BaseActivity() {
                     binding.searchEt.focusOff()
                 }
             }
-
         })
+        mainContentAdapter.run {
+            setOnAddDataListener {
+                mainViewModel.callSearchPaging()
+            }
+            setOnMainContentListener(object : MainContentAdapter.OnMainContentListener {
+                override fun onChangeSearchType(searchType: MainViewModel.SearchType) {
+                    mainViewModel.changeSearchType(searchType)
+                }
+
+                override fun onCallSortDialog(sortType: SortType) {
+                    mainViewModel.callShowSortDialog(sortType)
+                }
+
+                override fun onCallSearchDetail(searchModel: RpSearchResult.Document) {
+                    mainViewModel.callSearchDetail(searchModel)
+                }
+
+            })
+        }
     }
 
     private fun showRecentSearchLayout(isVisible: Boolean) {
@@ -175,6 +200,12 @@ class MainActivity : BaseActivity() {
 
     }
 
+    private fun startSearchDetailActivity(searchModel: RpSearchResult.Document) {
+        SearchDetailActivity.start(
+            context = this,
+            searchModel = searchModel
+        )
+    }
 
     fun onClick(view: View) {
         when (view.id) {

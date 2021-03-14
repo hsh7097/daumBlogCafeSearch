@@ -5,14 +5,19 @@
 
     <data>
 
+        <variable
+            name="contentViewHolder"
+            type="com.homework.prehomework.main.adapter.MainContentAdapter.ContentViewHolder" />
     </data>
 
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/contentCv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/external_margin16"
         android:layout_marginEnd="@dimen/external_margin16"
+        android:onClick="@{contentViewHolder::onAnimClick}"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="@dimen/corner_radius8"
         app:cardElevation="@dimen/elevation2">

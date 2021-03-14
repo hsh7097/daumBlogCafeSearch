@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -11,8 +12,11 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.homework.prehomework.R
 import com.homework.prehomework.base.BaseActivity
+import com.homework.prehomework.base.recyclerview.BaseViewHolder
 import com.homework.prehomework.databinding.ActivityMainBinding
+import com.homework.prehomework.localRoom.RecentlySearchWord
 import com.homework.prehomework.main.adapter.MainContentAdapter
+import com.homework.prehomework.main.adapter.MainContentAdapter.SortType
 import com.homework.prehomework.main.adapter.MainRecentlyAdapter
 import com.homework.prehomework.utils.extension.*
 import com.homework.prehomework.widgets.itemDecoration.ItemVerticalDecorator
@@ -94,11 +98,19 @@ class MainActivity : BaseActivity() {
 
     private fun observerLiveData() {
         with(mainViewModel) {
+            //상품 정보 호출로 검색입력 포커스 아웃
             contentListLiveData.observe(this@MainActivity, Observer {
                 binding.searchEt.focusOff()
             })
+
+            //최근 검색어 보여지도록 호출
             recentlySearchWordListLiveData.observe(this@MainActivity, Observer {
                 showRecentSearchLayout(true)
+            })
+
+            //정렬 타입을 선택하는 다이얼로그 생성
+            showSortTypeDialogLiveData.observe(this@MainActivity, Observer {
+                showSortDialog(it)
             })
         }
     }
@@ -124,17 +136,51 @@ class MainActivity : BaseActivity() {
                 }
             }
         }
+
+        mainRecentlyAdapter.setOnItemClickListener(object : BaseViewHolder.OnItemClickListener {
+            override fun onItemClick(position: Int, model: Any?) {
+                (model as? RecentlySearchWord)?.let {
+                    mainViewModel.callSearch(searchWord = it.word)
+                    binding.searchEt.focusOff()
+                }
+            }
+
+        })
     }
 
     private fun showRecentSearchLayout(isVisible: Boolean) {
         binding.recentSearchBackLayout.isVisible = isVisible
+    }
+
+    private fun showSortDialog(sortType: SortType) {
+        val defaultSelectedIndex = SortType.values().indexOf(sortType)
+        var selectedIndex = defaultSelectedIndex
+
+        //기획서 상 버튼 위치가 달라 positive <> negative 액션 변경
+        AlertDialog
+            .Builder(this)
+            .setTitle("정렬")
+            .setSingleChoiceItems(
+                SortType.values().map { it.sortName as CharSequence }.toTypedArray(),
+                selectedIndex
+            ) { _, index ->
+                selectedIndex = index
+            }.setNegativeButton(
+                "선택"
+            ) { _, _ ->
+                mainContentAdapter.changeSortType(SortType.values()[selectedIndex])
+            }
+            .setPositiveButton("취소", null)
+            .show()
 
     }
+
 
     fun onClick(view: View) {
         when (view.id) {
             R.id.recentSearchBackLayout -> {
                 binding.searchEt.focusOff()
+                showRecentSearchLayout(false)
             }
         }
     }

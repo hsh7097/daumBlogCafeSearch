@@ -1,11 +1,13 @@
 package com.homework.prehomework.network.model.responseModel
 
+import com.homework.prehomework.network.model.responseModel.RpSearchResult.SearchType
+
 data class RpSearchResult(
     val documents: List<Document> = listOf(),
     val meta: Meta? = Meta()
 ) {
 
-    enum class SearchType(val value : String) {
+    enum class SearchType(val value: String) {
         BLOG("B"),
         CAFE("C")
     }
@@ -27,4 +29,12 @@ data class RpSearchResult(
         val total_count: Int? = 0
     )
 
+
 }
+
+val RpSearchResult.Document.name: String?
+    get() = when (searchType) {
+        SearchType.BLOG -> blogname
+        SearchType.CAFE -> cafename
+        null -> ""
+    }

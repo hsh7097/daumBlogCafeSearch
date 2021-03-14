@@ -4,6 +4,10 @@
 
     <data>
 
+        <variable
+            name="headerViewHolder"
+            type="com.homework.prehomework.main.adapter.MainContentAdapter.HeaderViewHolder" />
+
     </data>
 
 
@@ -17,6 +21,7 @@
             android:id="@+id/sortIv"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:onClick="@{headerViewHolder::onClick}"
             android:padding="@dimen/internal_padding12"
             android:src="@drawable/icon_side_menu"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -24,41 +29,22 @@
             app:layout_constraintTop_toTopOf="parent" />
 
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/filterSpinner"
             android:layout_width="@dimen/zero_dp"
             android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/external_margin16"
+            android:dropDownVerticalOffset="48dp"
+            android:fontFamily="@font/nanumsquare_otfb"
+            android:gravity="center_vertical"
+            android:spinnerMode="dropdown"
+            android:textColor="@color/gray_1"
+            android:textSize="@dimen/text_size18"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/sortIv"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent" />
 
-
-            <ImageView
-                android:id="@+id/expendableArrow"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginEnd="@dimen/external_margin16"
-                android:src="@drawable/icon_system_caret_down"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-
-            <TextView
-                android:id="@+id/filterTv"
-                android:layout_width="@dimen/zero_dp"
-                android:layout_height="@dimen/zero_dp"
-                android:layout_marginStart="@dimen/external_margin16"
-                android:fontFamily="@font/nanumsquare_otfb"
-                android:gravity="center_vertical"
-                android:textColor="@color/gray_1"
-                android:textSize="@dimen/text_size18"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/expendableArrow"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <View
             android:layout_width="1dp"

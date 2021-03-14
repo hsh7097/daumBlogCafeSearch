@@ -31,7 +31,6 @@ fun EditText.focusOn() {
 
 fun EditText.focusOff() {
     hideKeyboard()
-    logError("focusOff")
     this.run {
         isFocusableInTouchMode = false
         isFocusable = false

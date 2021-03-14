@@ -48,7 +48,6 @@ abstract class BaseRecyclerAdapter<M> : RecyclerView.Adapter<BaseViewHolder>() {
         val insertPosition = model.size
         model.addAll(modelArrayList!!)
         notifyItemRangeInserted(insertPosition, modelArrayList.size)
-        logError("model $model")
     }
 
     open fun addData(model: M?) {

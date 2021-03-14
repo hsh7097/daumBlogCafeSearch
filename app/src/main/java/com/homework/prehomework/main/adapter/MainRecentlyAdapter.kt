@@ -37,12 +37,10 @@ class MainRecentlyAdapter(
                 false
             )
     ) : BaseViewHolder(binding.root) {
+
         fun bindData(searchModel: RecentlySearchWord) {
             with(binding) {
                 recentlyTv.text = searchModel.word
-                recentlyLayout.setOnClickListener {
-                    mainViewModel.callSearch(searchWord = searchModel.word)
-                }
             }
         }
 
@@ -55,7 +53,6 @@ fun bindMainMainRecentlyAdapterData(
     recyclerView: RecyclerView,
     items: ArrayList<RecentlySearchWord>?
 ) {
-    logError("bindMainContentAdapterData $items")
     (recyclerView.adapter as MainRecentlyAdapter).run {
         clearAdapter()
         if (!items.isNullOrEmpty()) {

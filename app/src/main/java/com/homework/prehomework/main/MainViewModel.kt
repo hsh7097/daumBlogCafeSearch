@@ -6,10 +6,11 @@ import com.homework.prehomework.base.BaseViewModel
 import com.homework.prehomework.localRoom.RecentlyRoomDataBase
 import com.homework.prehomework.localRoom.RecentlySearchWord
 import com.homework.prehomework.localRoom.RecentlySearchWordDao
+import com.homework.prehomework.main.adapter.MainContentAdapter.SortType
 import com.homework.prehomework.main.repository.MainRepository
 import com.homework.prehomework.main.repository.MainRepositoryImpl
 import com.homework.prehomework.network.model.responseModel.RpSearchResult
-import com.homework.prehomework.utils.extension.default
+import com.homework.prehomework.utils.SingleLiveData
 import com.homework.prehomework.utils.extension.logError
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -28,10 +29,10 @@ class MainViewModel(
         private const val PAGING_DEFAULT = 1
     }
 
-    enum class SearchType {
-        BLOG,
-        CAFE,
-        ALL
+    enum class SearchType(val value : String) {
+        ALL("All"),
+        BLOG("Blog"),
+        CAFE("Cafe")
     }
 
     //상품 리스트
@@ -46,21 +47,22 @@ class MainViewModel(
     private val _recentlySearchWordListLiveData = MutableLiveData<ArrayList<RecentlySearchWord>>()
     val recentlySearchWordListLiveData: LiveData<ArrayList<RecentlySearchWord>> get() = _recentlySearchWordListLiveData
 
-    //검색 타입
-    private val _searchTypeLiveData = MutableLiveData<SearchType>().default(SearchType.BLOG)
-    val searchTypeLiveData: LiveData<SearchType> get() = _searchTypeLiveData
+    //정렬 타입
+    private val _showSortTypeDialogLiveData = SingleLiveData<SortType>()
+    val showSortTypeDialogLiveData: LiveData<SortType> get() = _showSortTypeDialogLiveData
 
     var searchWord: String? = null
     var searchPaging: Int = 1
 
+    //검색 타입
+    private var searchType: SearchType = SearchType.ALL
 
-    fun callSearch(searchWord: String) {
-        if (searchWord.isEmpty()) return
+    fun callSearch(searchWord: String?) {
+        if (searchWord.isNullOrEmpty()) return
         this.searchWord = searchWord
         recentlySearchDao.insert(RecentlySearchWord(word = searchWord))
         searchPaging = PAGING_DEFAULT
-
-        when (searchTypeLiveData.value) {
+        when (searchType) {
             SearchType.BLOG -> getBlogSearch()
             SearchType.CAFE -> getCafeSearch()
             SearchType.ALL -> getAllSearch()
@@ -68,11 +70,17 @@ class MainViewModel(
     }
 
     fun callSearchPaging() {
-        when (searchTypeLiveData.value) {
+        when (searchType) {
             SearchType.BLOG -> getBlogSearch()
             SearchType.CAFE -> getCafeSearch()
             SearchType.ALL -> getAllSearch()
         }
+    }
+
+    fun changeSearchType(searchType: SearchType) {
+        if (this.searchType == searchType) return
+        this.searchType = searchType
+        callSearch(searchWord)
     }
 
     private fun getBlogSearch() {
@@ -84,7 +92,7 @@ class MainViewModel(
             responseSearch.documents.forEach {
                 it.searchType = RpSearchResult.SearchType.BLOG
             }
-            return@flatMap Single.just(responseSearch.documents.sortedBy { it.title }.toList())
+            return@flatMap Single.just(responseSearch.documents)
         }.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : DisposableSingleObserver<List<RpSearchResult.Document>>() {
@@ -98,7 +106,6 @@ class MainViewModel(
                 }
 
                 override fun onError(e: Throwable) {
-                    logError("onError $e")
                     e.printStackTrace()
                 }
             })
@@ -106,14 +113,14 @@ class MainViewModel(
 
     private fun getCafeSearch() {
         if (searchWord.isNullOrEmpty()) return
-        mainRepository.getBlogSearch(
+        mainRepository.getCafeSearch(
             query = searchWord!!,
             page = searchPaging
         ).flatMap { responseSearch ->
             responseSearch.documents.forEach {
                 it.searchType = RpSearchResult.SearchType.CAFE
             }
-            return@flatMap Single.just(responseSearch.documents.sortedBy { it.title }.toList())
+            return@flatMap Single.just(responseSearch.documents)
         }.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : DisposableSingleObserver<List<RpSearchResult.Document>>() {
@@ -152,11 +159,9 @@ class MainViewModel(
                     cafeSearch.documents.forEach {
                         it.searchType = RpSearchResult.SearchType.CAFE
                     }
-
                     addAll(blogSearch.documents)
                     addAll(cafeSearch.documents)
-                }.sortedBy { it.title }.toList()
-
+                }
             }).subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : DisposableSingleObserver<List<RpSearchResult.Document>>() {
@@ -179,10 +184,13 @@ class MainViewModel(
 
     fun callShowRecentSearchLayout() {
         val searchWordList = ArrayList(recentlySearchDao.getRecentSearchedWords())
-        logError("searchWordList$searchWordList")
         if (searchWordList.isNotEmpty()) {
             _recentlySearchWordListLiveData.postValue(searchWordList)
         }
+    }
+
+    fun callShowSortDialog(sortType: SortType) {
+        _showSortTypeDialogLiveData.postValue(sortType)
     }
 
 }

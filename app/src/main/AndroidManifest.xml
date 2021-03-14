@@ -32,7 +32,10 @@
 
         </activity>
 
-        <activity android:name="com.homework.prehomework.main.MainActivity"></activity>
+        <activity
+            android:name="com.homework.prehomework.main.MainActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
     </application>
 
 </manifest>

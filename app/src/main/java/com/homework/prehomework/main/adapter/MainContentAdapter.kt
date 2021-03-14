@@ -159,13 +159,16 @@ class MainContentAdapter : BasePagingRecyclerAdapter<SearchModel>() {
                 labelTv.text = searchModel.searchType?.value
                 titleTv.setTextHtml(searchModel.title)
                 dateTimeTv.text = searchModel.getShortDateTime()
-                thumbIv.setImageUrlCenterCrop(searchModel.thumbnail)
+                thumbIv.setImageUrlCenterCrop(
+                    url = searchModel.thumbnail,
+                    placeholder = R.drawable.placeholder
+                )
             }
             updateBackground(searchModel.isOpened)
         }
 
         private fun updateBackground(isOpened: Boolean) {
-            binding.contentLayout.setBackgroundDrawableResource(if (isOpened) R.color.gray_6 else R.color.white)
+            binding.contentLayout.setBackgroundDrawableResource(if (isOpened) R.color.gray_5 else R.color.white)
         }
 
         fun onAnimClick(view: View) {

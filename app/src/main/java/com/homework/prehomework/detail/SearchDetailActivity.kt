@@ -60,11 +60,11 @@ class SearchDetailActivity : BaseActivity() {
     }
 
     private fun startWebActivity() {
-//        WebViewActivity.start(
-//            context = this,
-//            title = searchModel?.title,
-//            loadUrl = searchModel?.url
-//        )
+        WebViewActivity.start(
+            context = this,
+            title = searchModel?.title,
+            loadUrl = searchModel?.url
+        )
     }
 
     fun onAnimClick(view: View) {

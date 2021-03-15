@@ -49,11 +49,9 @@ class MainContentAdapter : BasePagingRecyclerAdapter<SearchModel>() {
     }
 
     private fun changeSortModel(modelArrayList: java.util.ArrayList<RpSearchResult.Document>?) {
-        modelArrayList?.sortBy {
-            when (selectSortType) {
-                SortType.TITLE -> it.title
-                SortType.DATE_TIME -> it.datetime
-            }
+        when (selectSortType) {
+            SortType.TITLE -> modelArrayList?.sortBy { it.title }
+            SortType.DATE_TIME -> modelArrayList?.sortByDescending { it.datetime }
         }
     }
 

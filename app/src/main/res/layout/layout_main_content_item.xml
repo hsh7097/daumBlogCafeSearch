@@ -7,7 +7,7 @@
 
         <variable
             name="contentViewHolder"
-            type="com.homework.prehomework.main.adapter.MainContentAdapter.ContentViewHolder" />
+            type="com.thomas.daumBlogCafeTest.main.adapter.MainContentAdapter.ContentViewHolder" />
     </data>
 
 

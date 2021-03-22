@@ -8,11 +8,11 @@
 
         <variable
             name="searchDetailActivity"
-            type="com.homework.prehomework.detail.SearchDetailActivity" />
+            type="com.thomas.daumBlogCafeTest.detail.SearchDetailActivity" />
 
         <variable
             name="searchModel"
-            type="com.homework.prehomework.network.model.responseModel.RpSearchResult.Document" />
+            type="com.thomas.daumBlogCafeTest.network.model.responseModel.RpSearchResult.Document" />
 
     </data>
 

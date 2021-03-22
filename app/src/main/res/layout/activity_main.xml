@@ -8,11 +8,11 @@
 
         <variable
             name="mainActivity"
-            type="com.homework.prehomework.main.MainActivity" />
+            type="com.thomas.daumBlogCafeTest.main.MainActivity" />
 
         <variable
             name="viewModel"
-            type="com.homework.prehomework.main.MainViewModel" />
+            type="com.thomas.daumBlogCafeTest.main.MainViewModel" />
     </data>
 
 

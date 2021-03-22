@@ -8,7 +8,7 @@
 
         <variable
             name="webViewActivity"
-            type="com.homework.prehomework.web.WebViewActivity" />
+            type="com.thomas.daumBlogCafeTest.web.WebViewActivity" />
 
         <variable
             name="title"

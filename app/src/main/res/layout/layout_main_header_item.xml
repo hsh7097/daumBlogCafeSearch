@@ -6,7 +6,7 @@
 
         <variable
             name="headerViewHolder"
-            type="com.homework.prehomework.main.adapter.MainContentAdapter.HeaderViewHolder" />
+            type="com.thomas.daumBlogCafeTest.main.adapter.MainContentAdapter.HeaderViewHolder" />
 
     </data>
 

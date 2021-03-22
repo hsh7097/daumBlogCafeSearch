@@ -7,7 +7,8 @@ import com.thomas.daumBlogCafeTest.utils.extension.logError
 
 @BindingAdapter("isVisible")
 fun View.isVisible(
-    isVisibility: Boolean = false) {
+    isVisibility: Boolean = false
+) {
     logError("isVisibility $isVisibility")
     this.visibility = if (isVisibility) View.VISIBLE else View.GONE
 }

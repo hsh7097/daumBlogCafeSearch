@@ -5,8 +5,11 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.thomas.daumBlogCafeTest.R
 import com.thomas.daumBlogCafeTest.base.BaseActivity
 import com.thomas.daumBlogCafeTest.base.recyclerview.BaseViewHolder
@@ -18,6 +21,7 @@ import com.thomas.daumBlogCafeTest.main.adapter.MainContentAdapter.SortType
 import com.thomas.daumBlogCafeTest.main.adapter.MainRecentlyAdapter
 import com.thomas.daumBlogCafeTest.network.model.responseModel.RpSearchResult
 import com.thomas.daumBlogCafeTest.utils.extension.*
+import com.thomas.daumBlogCafeTest.widgets.itemDecoration.ItemVerticalDecorator
 import org.jetbrains.anko.intentFor
 
 class MainActivity : BaseActivity() {
